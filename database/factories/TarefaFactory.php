@@ -15,13 +15,21 @@ class TarefaFactory extends Factory
      */
     public function definition()
     {
+        $user =  User::all()->random();
+
+        while (count($user->categorias) == 0) {
+            $user =  User::all()->random();
+        }
+
         return [
             //
+
+
             'titulo' => $this->faker->text(15),
             'descricao' => $this->faker->text(70),
             'data' => $this->faker->dateTime(),
             'user_id' => User::all()->random(),
-            'categoria_id' => Categoria::all()->random(),
+            'categoria_id' => $user->categorias->random(),
         ];
     }
 }
