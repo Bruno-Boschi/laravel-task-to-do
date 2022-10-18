@@ -18,7 +18,7 @@ class CreateCategoriasTable extends Migration
             $table->id();
             $table->string('titulo');
             $table->string('cor')->default('#ffffff');
-            $table->integer('user_id');
+            $table->foreignIdFor(User::class)->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -30,6 +30,9 @@ class CreateCategoriasTable extends Migration
      */
     public function down()
     {
+        Schema::table('categorias', function (Blueprint $table) {
+            $table->dropConstrainedForeignId('user_id');
+        });
         Schema::dropIfExists('categorias');
     }
 }
